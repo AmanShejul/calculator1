@@ -1,0 +1,238 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Cat Calculator 🐱</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #dff3ff;
+        }
+
+        .calculator {
+            width: 330px;
+            background: #f5fbff;
+            padding: 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 80, 150, 0.2);
+            border: 3px solid #5bbcff;
+            position: relative;
+        }
+
+        /* Cat ears */
+        .ear {
+            position: absolute;
+            width: 55px;
+            height: 55px;
+            background: #5bbcff;
+            top: -38px;
+            z-index: -1;
+        }
+
+        .left-ear {
+            left: 15px;
+            transform: rotate(45deg);
+            border-radius: 10px 5px 5px 5px;
+        }
+
+        .right-ear {
+            right: 15px;
+            transform: rotate(45deg);
+            border-radius: 5px 10px 5px 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #168de2;
+            margin-bottom: 15px;
+            font-size: 25px;
+        }
+
+        .display {
+            width: 100%;
+            height: 70px;
+            background: #172b3a;
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            font-size: 30px;
+            text-align: right;
+            border: none;
+            outline: none;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            height: 58px;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #c9eaff;
+            color: #16445f;
+            transition: 0.15s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: #a8dcff;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .operator {
+            background: #5bbcff;
+            color: white;
+        }
+
+        .operator:hover {
+            background: #349fe8;
+        }
+
+        .clear {
+            background: #328fd0;
+            color: white;
+        }
+
+        .clear:hover {
+            background: #227bb8;
+        }
+
+        .equal {
+            background: #58c4e8;
+            color: white;
+            grid-row: span 2;
+            height: 126px;
+        }
+
+        .equal:hover {
+            background: #35add4;
+        }
+
+        .zero {
+            grid-column: span 2;
+        }
+
+        .cat-face {
+            text-align: center;
+            font-size: 30px;
+            margin-top: 15px;
+            color: #168de2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculator">
+
+        <div class="ear left-ear"></div>
+        <div class="ear right-ear"></div>
+
+        <h1>🐱 Blue Cat Calculator</h1>
+
+        <input type="text" class="display" id="display" value="0" readonly>
+
+        <div class="buttons">
+
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button onclick="deleteLast()">⌫</button>
+            <button onclick="appendValue('%')">%</button>
+            <button class="operator" onclick="appendValue('/')">÷</button>
+
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('*')">×</button>
+
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button class="operator" onclick="appendValue('-')">−</button>
+
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+
+            <button class="zero" onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button class="equal" onclick="calculate()">=</button>
+
+        </div>
+
+        <div class="cat-face">ฅ^•ﻌ•^ฅ</div>
+
+    </div>
+
+    <script>
+
+        let display = document.getElementById("display");
+
+        function appendValue(value) {
+            if (display.value === "0") {
+                display.value = value;
+            } else {
+                display.value += value;
+            }
+        }
+
+        function clearDisplay() {
+            display.value = "0";
+        }
+
+        function deleteLast() {
+            if (display.value.length > 1) {
+                display.value = display.value.slice(0, -1);
+            } else {
+                display.value = "0";
+            }
+        }
+
+        function calculate() {
+            try {
+                let expression = display.value;
+
+                expression = expression.replace(
+                    /(\d+(?:\.\d+)?)%/g,
+                    "($1/100)"
+                );
+
+                display.value = eval(expression);
+
+            } catch (error) {
+                display.value = "Error";
+
+                setTimeout(() => {
+                    display.value = "0";
+                }, 1000);
+            }
+        }
+
+    </script>
+
+</body>
+</html>
+```
